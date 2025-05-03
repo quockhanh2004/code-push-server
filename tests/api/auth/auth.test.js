@@ -60,7 +60,7 @@ describe('api/auth/test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: '请您输入邮箱地址',
+                        message: 'Please enter your email address',
                     });
                     done();
                 });
@@ -76,7 +76,7 @@ describe('api/auth/test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: '您输入的邮箱或密码有误',
+                        message: 'The email or password you entered is incorrect',
                     });
                     done();
                 });
@@ -92,7 +92,7 @@ describe('api/auth/test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: '您输入的邮箱或密码有误',
+                        message: 'The email or password you entered is incorrect',
                     });
                     done();
                 });

@@ -22,7 +22,7 @@ describe('api/users/users.test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: '请您输入邮箱地址',
+                        message: 'Please enter your email address',
                     });
                     done();
                 });
@@ -52,7 +52,7 @@ describe('api/users/users.test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: '请您输入邮箱地址',
+                        message: 'Please enter your email address',
                     });
                     done();
                 });
@@ -66,7 +66,7 @@ describe('api/users/users.test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: `"${accountExist}" 已经注册过，请更换邮箱注册`,
+                        message: `"${accountExist}" has already been registered, please use another email address to register`,
                     });
                     done();
                 });
@@ -103,7 +103,7 @@ describe('api/users/users.test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: `"${accountExist}" 已经注册过，请更换邮箱注册`,
+                        message: `"${accountExist}" has already been registered, please use another email address to register`,
                     });
                     done();
                 });
@@ -117,7 +117,7 @@ describe('api/users/users.test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: `验证码已经失效，请您重新获取`,
+                        message: `The verification code has expired, please get it again`,
                     });
                     done();
                 });
@@ -131,7 +131,7 @@ describe('api/users/users.test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: `您输入的验证码不正确，请重新输入`,
+                        message: `The verification code you entered is incorrect, please re-enter it`,
                     });
                     done();
                 });
@@ -166,7 +166,7 @@ describe('api/users/users.test.js', function () {
                     should.not.exist(err);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: `请您输入6～20位长度的密码`,
+                        message: `Please enter a password between 6 and 20 characters long`,
                     });
                     done();
                 });
@@ -228,7 +228,7 @@ describe('api/users/users.test.js', function () {
                     res.status.should.equal(200);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: `您输入的旧密码不正确，请重新输入`,
+                        message: `The old password you entered is incorrect, please re-enter it`,
                     });
                     done();
                 });
@@ -244,7 +244,7 @@ describe('api/users/users.test.js', function () {
                     res.status.should.equal(200);
                     JSON.parse(res.text).should.containEql({
                         status: 'ERROR',
-                        message: `请您输入6～20位长度的新密码`,
+                        message: `Please enter a new password between 6 and 20 characters long`,
                     });
                     done();
                 });
