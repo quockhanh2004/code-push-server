@@ -26,7 +26,7 @@ $ sudo npm i -g pm2
 ## Get code-push-server from NPM
 
 ```shell
-$ npm install @shm-open/code-push-server@latest -g
+$ npm install @quockhanh2004/code-push-server@latest -g
 ```
 
 ## Init Database
@@ -103,7 +103,7 @@ Connection: keep-alive
 ## Upgrade from old version
 
 ```shell
-$ npm install -g @shm-open/code-push-server@latest
+$ npm install -g @quockhanh2004/code-push-server@latest
 $ code-push-server-db upgrade --dbhost "your mysql host" --dbport "your mysql port"  --dbuser "your mysql user" --dbpassword "your mysql password" # upgrade codepush database
 $ pm2 restart code-push-server # restart service
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "@shm-open/code-push-server",
+  "name": "@quockhanh2004/code-push-server",
   "description": "CodePush service is hotupdate services which adapter react-native-code-push and cordova-plugin-code-push",
   "version": "2.1.6",
   "license": "MIT",
