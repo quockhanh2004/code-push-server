@@ -7,7 +7,7 @@ class EmailManager {
     sendMail(options: { to: string; html: string; subject?: string; from?: string }) {
         return new Promise((resolve, reject) => {
             if (!_.get(options, 'to')) {
-                reject(new AppError('to是必传参数'));
+                reject(new AppError('to is a required parameter'));
                 return;
             }
             const { smtpConfig } = config;
@@ -19,7 +19,7 @@ class EmailManager {
             const sendEmailAddress = smtpConfig.auth.user;
             const defaultMailOptions = {
                 from: `"CodePush Server" <${sendEmailAddress}>`, // sender address
-                to: '', // list of receivers 必传参数
+                to: '', // list of receivers required parameter
                 subject: 'CodePush Server', // Subject line
                 html: '', // html body
             };
@@ -37,7 +37,7 @@ class EmailManager {
     sendRegisterCodeMail(email: string, code: string) {
         return this.sendMail({
             to: email,
-            html: `<div>您接收的验证码为: <em style="color:red;">${code}</em>  20分钟内有效</div>`,
+            html: `<div>Your verification code is: <em style="color:red;">${code}</em> valid for 20 minutes</div>`,
         });
     }
 }

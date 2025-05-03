@@ -35,7 +35,7 @@ usersRouter.post(
             .checkRegisterCode(email, token)
             .then(() => {
                 if (_.isString(password) && password.length < 6) {
-                    throw new AppError('请您输入6～20位长度的密码');
+                    throw new AppError('Please enter a password between 6 and 20 characters long');
                 }
                 return accountManager.register(email, password);
             })
@@ -57,7 +57,7 @@ usersRouter.post(
 usersRouter.get('/exists', (req: Req<void, void, { email: string }>, res, next) => {
     const email = _.trim(req.query.email);
     if (!email) {
-        res.send({ status: 'ERROR', message: '请您输入邮箱地址' });
+        res.send({ status: 'ERROR', message: 'Please enter your email address' });
         return;
     }
     Users.findOne({ where: { email } })
@@ -114,7 +114,7 @@ usersRouter.get(
     },
 );
 
-// 修改密码
+// Change password
 usersRouter.patch(
     '/password',
     checkToken,

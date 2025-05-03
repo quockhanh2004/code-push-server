@@ -13,13 +13,13 @@ import { CURRENT_DB_VERSION } from './core/const';
 
 const argv = yargs
     .usage('Usage: $0 <command> [options]')
-    .command('init', '初始化数据库', {
+    .command('init', 'Initialize database', {
         dbpassword: {
             alias: 'dbpassword',
             type: 'string',
         },
     })
-    .command('upgrade', '升级数据库', {
+    .command('upgrade', 'Upgrade database', {
         dbpassword: {
             alias: 'dbpassword',
             type: 'string',
@@ -27,11 +27,11 @@ const argv = yargs
     })
     .example(
         '$0 init --dbname codepush --dbhost localhost --dbuser root --dbpassword 123456 --dbport 3306 --force',
-        '初始化code-push-server数据库',
+        'Initialize code-push-server database',
     )
     .example(
         '$0 upgrade --dbname codepush --dbhost localhost --dbuser root --dbpassword 123456 --dbport 3306',
-        '升级code-push-server数据库',
+        'Upgrade code-push-server database',
     )
     .default({
         dbname: 'codepush',

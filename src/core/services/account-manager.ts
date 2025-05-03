@@ -98,10 +98,10 @@ class AccountManager {
 
     login(account: string, password: string) {
         if (_.isEmpty(account)) {
-            return Promise.reject(new AppError('请您输入邮箱地址'));
+            return Promise.reject(new AppError('Please enter your email address'));
         }
         if (_.isEmpty(password)) {
-            return Promise.reject(new AppError('请您输入密码'));
+            return Promise.reject(new AppError('Please enter your password'));
         }
         let where = {};
         if (validator.isEmail(account)) {
@@ -113,7 +113,7 @@ class AccountManager {
         return Users.findOne({ where })
             .then((users) => {
                 if (_.isEmpty(users)) {
-                    throw new AppError('您输入的邮箱或密码有误');
+                    throw new AppError('The email or password you entered is incorrect');
                 }
                 return users;
             })
@@ -122,7 +122,7 @@ class AccountManager {
                     const loginKey = `${LOGIN_LIMIT_PRE}${users.id}`;
                     return redisClient.get(loginKey).then((loginErrorTimes) => {
                         if (Number(loginErrorTimes) > tryLoginTimes) {
-                            throw new AppError(`您输入密码错误次数超过限制，帐户已经锁定`);
+                            throw new AppError('The number of times you entered the wrong password exceeds the limit, and the account is locked');
                         }
                         return users;
                     });
@@ -142,7 +142,7 @@ class AccountManager {
                             redisClient.incr(loginKey);
                         });
                     }
-                    throw new AppError('您输入的邮箱或密码有误');
+                    throw new AppError('The email or password you entered is incorrect');
                 } else {
                     return users;
                 }
@@ -151,16 +151,15 @@ class AccountManager {
 
     sendRegisterCode(email: string) {
         if (_.isEmpty(email)) {
-            return Promise.reject(new AppError('请您输入邮箱地址'));
+            return Promise.reject(new AppError('Please enter your email address'));
         }
         return Users.findOne({ where: { email } })
             .then((u) => {
                 if (u) {
-                    throw new AppError(`"${email}" 已经注册过，请更换邮箱注册`);
+                    throw new AppError(`"${email}" has already been registered, please use another email address to register`);
                 }
             })
             .then(() => {
-                // 将token临时存储到redis
                 const token = randToken(40);
                 return redisClient
                     .setEx(`${REGISTER_CODE}${md5(email)}`, EXPIRED, token)
@@ -169,7 +168,6 @@ class AccountManager {
                     });
             })
             .then((token) => {
-                // 将token发送到用户邮箱
                 return emailManager.sendRegisterCodeMail(email, token);
             });
     }
@@ -178,14 +176,14 @@ class AccountManager {
         return Users.findOne({ where: { email } })
             .then((u) => {
                 if (u) {
-                    throw new AppError(`"${email}" 已经注册过，请更换邮箱注册`);
+                    throw new AppError(`"${email}" has already been registered, please use another email address to register`);
                 }
             })
             .then(() => {
                 const registerKey = `${REGISTER_CODE}${md5(email)}`;
                 return redisClient.get(registerKey).then((storageToken) => {
                     if (_.isEmpty(storageToken)) {
-                        throw new AppError(`验证码已经失效，请您重新获取`);
+                        throw new AppError('The verification code has expired, please get it again');
                     }
                     if (!_.eq(token, storageToken)) {
                         redisClient.ttl(registerKey).then((ttl) => {
@@ -193,7 +191,7 @@ class AccountManager {
                                 redisClient.expire(registerKey, ttl - EXPIRED_SPEED);
                             }
                         });
-                        throw new AppError(`您输入的验证码不正确，请重新输入`);
+                        throw new AppError('The verification code you entered is incorrect, please re-enter it');
                     }
                     return storageToken;
                 });
@@ -204,7 +202,7 @@ class AccountManager {
         return Users.findOne({ where: { email } })
             .then((u) => {
                 if (u) {
-                    throw new AppError(`"${email}" 已经注册过，请更换邮箱注册`);
+                    throw new AppError(`"${email}" has already been registered, please use another email address to register`);
                 }
             })
             .then(() => {
@@ -219,19 +217,19 @@ class AccountManager {
 
     changePassword(uid: number, oldPassword: string, newPassword: string) {
         if (!_.isString(newPassword) || newPassword.length < 6) {
-            return Promise.reject(new AppError('请您输入6～20位长度的新密码'));
+            return Promise.reject(new AppError('Please enter a new password between 6 and 20 characters long'));
         }
         return Users.findOne({ where: { id: uid } })
             .then((u) => {
                 if (!u) {
-                    throw new AppError(`未找到用户信息`);
+                    throw new AppError('User information not found');
                 }
                 return u;
             })
             .then((u) => {
                 const isEq = passwordVerifySync(oldPassword, u.get('password'));
                 if (!isEq) {
-                    throw new AppError(`您输入的旧密码不正确，请重新输入`);
+                    throw new AppError('The old password you entered is incorrect, please re-enter it');
                 }
                 u.set('password', passwordHashSync(newPassword));
                 u.set('ack_code', randToken(5));
