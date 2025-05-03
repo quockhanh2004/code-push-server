@@ -49,6 +49,7 @@ const dbhost = argv.dbhost ? argv.dbhost : 'localhost';
 const dbuser = argv.dbuser ? argv.dbuser : 'root';
 const dbport = argv.dbport ? argv.dbport : 3306;
 const { dbpassword } = argv;
+console.log('dbpassword >> ',dbpassword);
 
 if (command === 'init') {
     let connection2;
