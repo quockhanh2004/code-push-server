@@ -270,10 +270,11 @@ appsRouter.get(
     '/:appName/deployments/:deploymentName/history',
     checkToken,
     (req: Req<{ appName: string; deploymentName: string }>, res, next) => {
-        const { logger, params } = req;
+        const { logger, params, query } = req;
         const uid = req.users.id;
         const appName = _.trim(params.appName);
         const deploymentName = _.trim(params.deploymentName);
+        const { limit } = query;
         logger.info('try to get deployment history', {
             uid,
             appName,
@@ -292,7 +293,7 @@ appsRouter.get(
                     });
             })
             .then((deploymentInfo) => {
-                return deploymentsManager.getDeploymentHistory(deploymentInfo.id);
+                return deploymentsManager.getDeploymentHistory(deploymentInfo.id, limit);
             })
             .then((rs) => {
                 logger.info('get deployment history success', {

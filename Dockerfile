@@ -3,9 +3,6 @@
 # Sử dụng Alpine Node LTS base image
 FROM node:lts-alpine AS deps
 
-# Cài git và các build tool cần thiết cho các native module (nếu có)
-RUN apk add --no-cache git python3 make g++
-
 # Tạo thư mục làm việc
 WORKDIR /app
 

@@ -198,11 +198,11 @@ class DeploymentsManager {
             });
     }
 
-    getDeploymentHistory(deploymentId) {
+    getDeploymentHistory(deploymentId, limit) {
         return DeploymentsHistory.findAll({
             where: { deployment_id: deploymentId },
             order: [['id', 'desc']],
-            limit: 15,
+            limit: parseInt(limit, 10) ?? 15,
         })
             .then((history) => {
                 return _.map(history, (v) => {
