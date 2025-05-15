@@ -1,7 +1,5 @@
 # CodePush Server ![Node.js CI](https://github.com/shm-open/code-push-server/workflows/Node.js%20CI/badge.svg)
 
-[[Chinese version 中文版]](./README.cn.md)
-
 CodePush Server is a CodePush program server. The official Microsoft CodePush service is slow in China, therefore we use this to host our own server.
 
 ## About this fork
